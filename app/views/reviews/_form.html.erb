@@ -1,0 +1,8 @@
+<h3>Tell <%= @store.name %> what you think about <%= @product.name %>! </h3>
+
+<%= form_for [@store, @product, @review] do |f| %>
+    <%= f.label :product_review, "Product Review" %><br><br>
+    <%= f.text_area :product_review, size: "50x15" %><br><br>
+
+    <%= f.submit %><br>
+<% end %>

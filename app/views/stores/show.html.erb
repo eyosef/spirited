@@ -1,0 +1,63 @@
+<h3> Come visit us: </h3>
+<%= @store.address_line_1 %><br>
+<% if @store.address_line_2 != nil %>
+    <%= @store.address_line_2 %><br>
+<% end %>
+<%= @store.city %><br>
+<%= @store.zipcode %><br>
+
+<h3> Any questions? Call us: </h3>
+<%= @store.phone_number %>
+
+<h3> Hours of Operation: </h3>
+    Sunday: <%= @store.hours_of_operation[0][0] %> - <%= @store.hours_of_operation[0][1] %><br>
+    <% if @store.hours_of_operation[1][0] == nil && @store.hours_of_operation[1][1] == nil %>
+        Monday: closed <br>
+    <% elsif @store.hours_of_operation[1][0] == 0000 && @store.hours_of_operation[1][1] == 0000 %>
+        Monday: closed <br>
+    <% else %>
+        Monday: <%= @store.hours_of_operation[1][0] %> - <%= @store.hours_of_operation[1][1] %><br>
+    <% end %>
+    Tuesday: <%= @store.hours_of_operation[2][0] %> - <%= @store.hours_of_operation[2][1] %><br>
+    Wednesday: <%= @store.hours_of_operation[3][0] %> - <%= @store.hours_of_operation[3][1] %><br>
+    Thursday: <%= @store.hours_of_operation[4][0] %> - <%= @store.hours_of_operation[4][1] %><br>
+    Friday: <%= @store.hours_of_operation[5][0] %> - <%= @store.hours_of_operation[5][1] %><br>
+    Saturday: <%= @store.hours_of_operation[6][0] %> - <%= @store.hours_of_operation[6][1] %><br>
+
+<h3>FAQs</h3>
+    <% if @store.bilingual == true %>
+        <p> Are staff bilingual? Yes. </p>
+    <% else %>
+        <p> Are staff bilingual? No. </p>
+    <% end %>
+
+    <% if @store.tasting_bar == true %>
+        <p> Is there a tasting bar? Yes. </p>
+    <% else %>
+        <p> Is there a tasting bar? No. </p>
+    <% end %>
+
+    <% if @store.public_transport == true %>
+        <p> Is it accessible via public transportation? Yes. </p>
+    <% else %>
+        <p> Is it accessible via public transportation? No.  </p>
+    <% end %>
+
+<br></br>
+<br></br>
+
+<% @store.products.each do |product| %>
+
+    <img src=" <%=product.image%> "><br>
+    Name: <%= product.name %><br>
+    Alcohol Content: <%= product.alcohol_content * 0.01 %><br>
+    Price (in Canadian dollars): <%= product.price_in_cents * 0.01 %><br>
+    Variety: <%= product.variety %><br>
+    Style: <%= product.style %><br>
+    Brewery/Winery/Distillery: <%= product.producer_name %><br>
+    Flavor Profile: <%= product.flavor_profile %><br>
+    Suggestion: <%= product.serving_suggestion %><br>
+    <%= link_to "See what customers think!", store_product_path(@store, product) %><br>
+    <br></br>
+
+<% end %>

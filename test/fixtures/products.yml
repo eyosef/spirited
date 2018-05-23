@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  variety: MyString
+  style: MyString
+  alcohol_content: 1
+  price_in_cents: 1
+  producer_name: MyString
+  serving_suggestion: MyString
+  flavor_profile: MyString
+  image: MyString
+  producer_id: 1
+
+two:
+  name: MyString
+  variety: MyString
+  style: MyString
+  alcohol_content: 1
+  price_in_cents: 1
+  producer_name: MyString
+  serving_suggestion: MyString
+  flavor_profile: MyString
+  image: MyString
+  producer_id: 1

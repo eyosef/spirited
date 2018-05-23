@@ -1,0 +1,24 @@
+<h3>Brewed by: <%= @product.producer_name %> </h3>
+
+<h3> <%= @product.name %> </h3><br>
+
+<img src=" <%=@product.image%> "><br>
+<i>Alcohol Content: </i><%= @product.alcohol_content * 0.01 %><br>
+<i>Price (in Canadian dollars): </i><%= @product.price_in_cents * 0.01 %><br>
+<i>Variety: </i><%= @product.variety %><br>
+<i>Style: </i><%= @product.style %><br>
+<i>Flavor Profile: </i><%= @product.flavor_profile %><br>
+<i>Suggestion: </i><%= @product.serving_suggestion %><br>
+<br>
+
+<% if @product.reviews.empty? %>
+    <p> It looks like there are no reviews yet. </p>
+    <p> <%= link_to "Be the first to review this product!", new_store_product_review_path(@store, @product, @review) %></p>
+    <%= hidden_field_tag "user_id", @user_id %>
+<% else %>
+    <h3>User Reviews:</h3>
+    <% @product.reviews.each do |review| %>
+        <p> <strong> <%= review.user.username %> says:</strong> <%= review.product_review %> </p>
+    <% end %>
+    <p> <%= link_to "Share Your Experience!", new_store_product_review_path(@store, @product, @review) %></p>
+<% end %>

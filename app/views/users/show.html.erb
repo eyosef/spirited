@@ -1,0 +1,21 @@
+<h2> Welcome <%= @user.first_name %>! </h2>
+
+<h3>Your Account Info:</h3>
+
+<strong> Username: </strong> <%= @user.username %><br>
+<strong> First Name: </strong> <%= @user.first_name %><br> 
+<strong> Last Name: </strong> <%= @user.last_name %><br> 
+<strong> You joined us on: </strong> <%= @user.created_at.strftime("%B %d %Y") %> <br></br>
+
+<h3>Your Reviews:</h3>
+<% @user.reviews.newest_first.each do |review| %>
+    <strong>Business: </strong> <%= review.product.store.name %><br>
+    <strong>Product: </strong> <%= review.product.name %><br> 
+    <strong>Review: </strong><%= review.product_review %><br></br>
+<% end %>
+
+<%= link_to "Edit Your Account Info", edit_user_path(@user) %><br></br>
+
+<%= link_to "Explore Restaurants", stores_path(:user_id => @user.id) %><br></br>
+
+<%= link_to "Log out", logout_path(@user) %><br>
