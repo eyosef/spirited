@@ -1,5 +1,11 @@
 <h2> Welcome <%= @user.first_name %>! </h2>
 
+<%= link_to "Explore Restaurants", stores_path(:user_id => @user.id) %><br></br>
+
+<%= link_to "Edit Your Account Info", edit_user_path(@user) %><br></br>
+
+<%= link_to "Log out", logout_path(@user) %><br></br>
+
 <h3>Your Account Info:</h3>
 
 <strong> Username: </strong> <%= @user.username %><br>
@@ -12,12 +18,8 @@
     <strong>Business: </strong> <%= review.product.store.name %><br>
     <strong>Product: </strong> <%= review.product.name %><br> 
     <strong>Review: </strong><%= review.product_review %><br>
-    <%= link_to "Edit this Review", edit_store_product_review_path(@store, @product, review) %><br></br>
+    <%= link_to "Edit this Review", edit_store_product_review_path(@store, @product, review) %><br>
+    <%= link_to "Delete this Review", delete_review_path(review) %><br></br>
+
     <%= hidden_field_tag "user_id", @user.id %>
 <% end %>
-
-<%= link_to "Edit Your Account Info", edit_user_path(@user) %><br></br>
-
-<%= link_to "Explore Restaurants", stores_path(:user_id => @user.id) %><br></br>
-
-<%= link_to "Log out", logout_path(@user) %><br>
