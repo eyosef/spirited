@@ -11,6 +11,15 @@ class ReviewsController < JSONAPI::ResourceController
         @users = User.all
     end
 
+    def edit 
+        @product = Product.find(params["product_id"])
+        @store = Store.find(params["store_id"])
+        @review = Review.find(params["id"])
+    end 
+
+    def update 
+    end
+
     def create 
 
         @user = User.find(params[:user][:id])
