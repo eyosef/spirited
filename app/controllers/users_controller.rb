@@ -24,6 +24,12 @@ class UsersController < JSONAPI::ResourceController
     def show 
         @user = User.find(params["id"])
         session[:user_id] = @user.id
+
+        @user.reviews.each do |review|
+            @product = review.product 
+            @store = @product.store 
+        end 
+
     end
 
     def edit 
