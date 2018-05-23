@@ -1,11 +1,11 @@
 <h1> Log In here!</h1>
 
 <%= form_for @user, url: sessions_path do |f| %>
-    <%= f.label :username %><br>
-    <%= f.text_field :username %><br><</br>
+    <div class="field_with_errors"> <%= f.label :username %><br> </div>
+    <div class="field_with_errors"> <%= f.text_field :username %> </div> <br></br> 
 
-    <%= f.label :password %><<br>
-    <%= f.password_field :password %><br><</br>
+    <div class="field_with_errors"> <%= f.label :password %> </div> <br>
+    <div class="field_with_errors"> <%= f.password_field :password %> </div> <br></br>
 
     <%= f.submit "Log In" %>
 <% end %>
