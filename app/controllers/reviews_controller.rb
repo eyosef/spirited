@@ -29,7 +29,7 @@ class ReviewsController < JSONAPI::ResourceController
             redirect_to edit_store_product_review(@review)
         end 
     end
-    
+
 
     def create 
 
@@ -51,6 +51,15 @@ class ReviewsController < JSONAPI::ResourceController
     end
 
     def show 
+    end
+
+    def destroy 
+        @review = Review.find(params[:format])
+        @user = User.find(@review.user_id)
+
+        @review.destroy 
+
+        redirect_to user_path(@user)
     end
 
     private 
