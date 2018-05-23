@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   post '/stores/:store_id/products/:product_id/reviews/:id', to: 'reviews#update'
 
+  get '/delete_review' => 'reviews#destroy'
+
   jsonapi_resources :stores do 
     jsonapi_resources :products do 
       jsonapi_resources :reviews, only: [:index, :show, :new, :create, :edit, :update, :destroy]
