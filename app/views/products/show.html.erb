@@ -1,5 +1,7 @@
 <h3>Brewed by: <%= @product.producer_name %> </h3>
 
+<%= link_to "Go Back to the Beer Menu", store_path(@store)  %>
+
 <h3> <%= @product.name %> </h3><br>
 
 <img src=" <%=@product.image%> "><br>
@@ -18,7 +20,10 @@
 <% else %>
     <h3>User Reviews:</h3>
     <% @product.reviews.each do |review| %>
-        <p> <strong> <%= review.user.username %> says:</strong> <%= review.product_review %> </p>
+        <p> <strong> <%= review.user.username %> says:</strong> <%= review.product_review %><br> 
+        posted on <%= review.created_at.strftime("%B %d %Y") %>
+        </p>
+
     <% end %>
     <p> <%= link_to "Share Your Experience!", new_store_product_review_path(@store, @product, @review) %></p>
 <% end %>
