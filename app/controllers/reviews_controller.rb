@@ -18,7 +18,18 @@ class ReviewsController < JSONAPI::ResourceController
     end 
 
     def update 
+        @review = Review.find(params[:id])
+        @user = User.find(params[:user][:id])
+
+        if @user.authenticate(params[:review][:password])
+            @review.update(product_review: params[:review][:product_review])
+
+            redirect_to user_path(@user) 
+        else 
+            redirect_to edit_store_product_review(@review)
+        end 
     end
+    
 
     def create 
 
