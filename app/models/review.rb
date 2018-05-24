@@ -4,5 +4,7 @@ class Review < ApplicationRecord
     belongs_to :user 
     belongs_to :product
 
+    validates :product_review, :presence => true 
+    validates :product_review, :uniqueness => true 
 
 end
