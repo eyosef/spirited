@@ -6,8 +6,9 @@ class SessionsController < JSONAPI::ResourceController
         @user = User.new
     end
 
-    def create 
+    def create
         @user = User.find_by(username: params[:user][:username])
+
         if !@user.authenticate(params[:user][:password])
             return head(:forbidden) 
         else 
