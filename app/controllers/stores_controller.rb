@@ -1,3 +1,4 @@
+require 'omniauth'
 class StoresController < JSONAPI::ResourceController
     # include HTTParty 
     # base_uri "lcboapi.com/"

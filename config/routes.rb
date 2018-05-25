@@ -2,6 +2,14 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get '/welcome' => 'welcome#new'
 
+  # get 'login', to: redirect('/auth/google_oauth2'), as: 'login'
+  get '/auth/:provider/callback', :to => 'sessions#create'
+  get 'auth/failure', to: redirect('/welcome')
+  delete 'signout', :to => 'sessions#destroy', as: "signout"
+  # get '/login', :to => 'sessions#new', :as => :login 
+  # match '/auth/failure', to: redirect('/welcome')
+  # get 'auth/google_oauth2', to: 'sessions#create'
+
   post '/stores/:store_id/products/:product_id/reviews/:id', to: 'reviews#update'
 
   get '/delete_review' => 'reviews#destroy'
@@ -12,7 +20,6 @@ Rails.application.routes.draw do
     end 
   end 
 
-  get '/logout' => 'sessions#destroy'
 
   jsonapi_resources :sessions, only: [:new, :create]
 

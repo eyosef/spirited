@@ -24,3 +24,8 @@
 
     <%= f.submit "Log In" %>
 <% end %>
+
+<%= link_to('Log in with Google!', '/auth/google_oauth2') %><br>
+
+
+<%= link_to 'Sign In with Github', '/auth/github/authorize?ENV['github_client_id']' %>

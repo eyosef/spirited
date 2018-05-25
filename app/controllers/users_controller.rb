@@ -1,3 +1,4 @@
+require 'omniauth'
 class UsersController < JSONAPI::ResourceController
     skip_before_action :verify_authenticity_token
 
@@ -9,12 +10,13 @@ class UsersController < JSONAPI::ResourceController
         
         user = User.new(user_params)
 
-        if user.valid?
-            user.save
-            session[:user_id] = user.id 
-            redirect_to user_url(user)
+        if user.save && user.create_login(login_params)
+            head 200 
+            # session[:user_id] = user.id 
+            # redirect_to user_url(user)
         else 
-            redirect_to new_user_url 
+            head 422
+            # redirect_to new_user_url 
         end
     end 
 
@@ -52,7 +54,11 @@ class UsersController < JSONAPI::ResourceController
     private 
 
     def user_params 
-        params.require(:user).permit(:first_name, :last_name, :username, :password, :password_confirmation)
+        params.require(:user).permit(:first_name, :last_name, :username)
     end
+
+    def login_params
+        params.require(:user).permit(:identification, :password, :password_confirmation)
+      end
 
 end

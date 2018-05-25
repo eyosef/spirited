@@ -1,3 +1,4 @@
+require 'omniauth'
 class ProductsController < JSONAPI::ResourceController 
 
     def show 

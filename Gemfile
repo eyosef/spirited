@@ -12,9 +12,16 @@ gem 'puma', '~> 3.11'
 
 gem 'bcrypt', '~> 3.1', '>= 3.1.11'
 
-gem 'omniauth'
+gem 'thin', '~> 1.7'
 
+gem 'dotenv'
+
+gem 'omniauth'
+gem 'rails_api_auth'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'omniauth-github'
 
 gem "figaro"
 
