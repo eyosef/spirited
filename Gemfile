@@ -15,7 +15,6 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.11'
 gem 'thin', '~> 1.7'
 
 gem 'dotenv'
-
 gem 'omniauth'
 gem 'rails_api_auth'
 gem 'omniauth-google-oauth2'

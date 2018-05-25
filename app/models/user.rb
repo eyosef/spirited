@@ -5,9 +5,7 @@ class User < ApplicationRecord
     has_many :products, through: :reviews
 
     has_secure_password
-    validates :password, :confirmation => true
-    validates :password, presence: true
-    
+
     validates :username, presence: true 
     validates :username, uniqueness: true 
 

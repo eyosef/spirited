@@ -42,9 +42,12 @@ class UsersController < JSONAPI::ResourceController
 
         @user = User.find(params[:id])
 
-        if @user.authenticate(params[:user][:password])
+        if !@user.provider.nil?
             @user.update(user_params)
-
+            redirect_to user_path(@user) 
+        elsif @user.provider.nil?
+            @user.authenticate(params[:user][:password])
+            @user.update(user_params)
             redirect_to user_path(@user) 
         else 
             redirect_to edit_user_path(@user)

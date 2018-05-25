@@ -10,6 +10,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
         :image_size => 50 
     }
 
-    provider :github, Rails.application.secrets.github_client_id, Rails.application.secrets.github_client_secret, opts
+    provider :github, "e89be330b545152e6d27", "02ed3ae160b2e6ff8156f1ea275435973f6c1a92"
 
 end
