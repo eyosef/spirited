@@ -2,8 +2,6 @@
 
 <%= link_to "Explore Restaurants", stores_path(:user_id => @user.id) %><br></br>
 
-<%= link_to "Edit Your Account Info", edit_user_path(@user) %><br></br>
-
 <%= link_to "Log out", signout_path(@user) %><br></br>
 
 <h3>Your Account Info:</h3>
@@ -11,7 +9,10 @@
 <strong> Username: </strong> <%= @user.username %><br>
 <strong> First Name: </strong> <%= @user.first_name %><br> 
 <strong> Last Name: </strong> <%= @user.last_name %><br> 
-<strong> You joined us on: </strong> <%= @user.created_at.strftime("%B %d %Y") %> <br></br>
+<strong> You joined us on: </strong> <%= @user.created_at.strftime("%B %d %Y") %> <br>
+
+<p><strong>Please note:</strong> Users logged-in via Github are required to create passwords to submit user reviews.</p>
+<%= link_to "Edit Your Account Info", edit_user_path(@user) %><br></br><br>
 
 <h3>Your Reviews:</h3>
 <% @user.reviews.newest_first.each do |review| %>

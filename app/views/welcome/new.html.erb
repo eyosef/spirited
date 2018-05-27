@@ -1,4 +1,5 @@
 <h1> Welcome to Spirited! </h1>
 
-<p>Click <%= link_to "here", { :controller => :sessions, :action => :new } %> to login.</p>
+<p>Click <%= link_to "here", { :controller => :sessions, :action => :new } %> to log into your account.</p>
+<p>Login with <%= link_to 'Github', '/auth/github' %></p>
 <p>Not a user? Click <%= link_to "here", new_user_path %> to signup.</p>

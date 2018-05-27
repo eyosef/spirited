@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2018_05_22_155208) do
     t.string "username"
     t.string "first_name"
     t.string "last_name"
+    t.string "oauth_token"
     t.string "password_digest"
     t.string "password_confirmation"
     t.datetime "created_at", null: false

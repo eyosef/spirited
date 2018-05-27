@@ -1,5 +1,6 @@
 /config/application.yml
 /config/initializers/pusher.rb
+/config/initializers/omniauth.rb
 /config/credentials.yml.enc 
 /config/master.key
 

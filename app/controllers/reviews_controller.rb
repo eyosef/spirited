@@ -22,35 +22,32 @@ class ReviewsController < JSONAPI::ResourceController
         @review = Review.find(params[:id])
         @user = User.find(params[:user][:id])
 
-        if !@user.provider.nil?
+        if !@user.provider.nil? && @user.authenticate(params[:review][:password])
             @review.update(product_review: params[:review][:product_review])
             redirect_to user_path(@user)
-        elsif @user.provider.nil?
-            @user.authenticate(params[:review][:password])
+        elsif @user.provider.nil? && @user.authenticate(params[:review][:password])
             @review.update(product_review: params[:review][:product_review])
 
             redirect_to user_path(@user) 
         else 
-            redirect_to edit_store_product_review(@review)
+            redirect_to edit_store_product_review_path(@review)
         end 
     end
 
 
     def create 
-
         @user = User.find(params[:user][:id])
         @product = Product.find(params[:product_id])
         @store = Store.find(params[:store_id])
 
-        if !@user.provider.nil?
+        if !@user.provider.nil? && @user.authenticate(params[:review][:password])
             review = Review.create(
                 product_id: params[:product_id],
                 product_review: params[:review][:product_review],
                 user_id: params[:user][:id]
                 )
             redirect_to store_product_path(@store, @product)
-        elsif @user.provider.nil?
-
+        elsif @user.provider.nil? && @user.authenticate(params[:review][:password])
             @review = Review.create(
                 product_id: params[:product_id],
                 product_review: params[:review][:product_review],

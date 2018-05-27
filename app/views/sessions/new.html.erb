@@ -1,20 +1,5 @@
 <h1> Log In here!</h1>
 
-<% if @user.errors.any? %>
-  <div id="error_explanation">
-    <h2>
-      <%= pluralize(@user.errors.count, "error") %>
-      prohibited login:
-    </h2>
- 
-    <ul>
-    <% @user.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
-
 <%= form_for @user, url: sessions_path do |f| %>
     <%= f.label :username %> <br> 
     <%= f.text_field :username %> <br></br> 
@@ -25,7 +10,4 @@
     <%= f.submit "Log In" %>
 <% end %>
 
-<%= link_to 'Sign in with Google!', '/auth/google' %><br>
 
-
-<%= link_to 'Sign In with Github', '/auth/github' %>

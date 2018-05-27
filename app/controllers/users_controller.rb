@@ -7,16 +7,14 @@ class UsersController < JSONAPI::ResourceController
     end 
 
     def create 
-        
         user = User.new(user_params)
+        user.update(login_params)
 
-        if user.save && user.create_login(login_params)
-            head 200 
-            # session[:user_id] = user.id 
-            # redirect_to user_url(user)
+        if user.save
+            session[:user_id] = user.id 
+            redirect_to user_url(user)
         else 
-            head 422
-            # redirect_to new_user_url 
+            redirect_to new_user_url 
         end
     end 
 
@@ -43,10 +41,14 @@ class UsersController < JSONAPI::ResourceController
         @user = User.find(params[:id])
 
         if !@user.provider.nil?
-            @user.update(user_params)
-            redirect_to user_path(@user) 
-        elsif @user.provider.nil?
-            @user.authenticate(params[:user][:password])
+            if params[:user][:password] ==  params[:user][:password_confirmation]
+                @user.update(login_params)
+                @user.update(user_params)
+                redirect_to user_path(@user) 
+            else 
+                redirect_to edit_user_path(@user)
+            end 
+        elsif @user.provider.nil? && @user.authenticate(params[:user][:password])
             @user.update(user_params)
             redirect_to user_path(@user) 
         else 
@@ -62,6 +64,6 @@ class UsersController < JSONAPI::ResourceController
 
     def login_params
         params.require(:user).permit(:identification, :password, :password_confirmation)
-      end
+    end
 
 end
