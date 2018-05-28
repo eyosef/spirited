@@ -1,9 +1,8 @@
 require 'omniauth'
 class StoresController < JSONAPI::ResourceController
-    # include HTTParty 
-    # base_uri "lcboapi.com/"
 
     def index 
+        if @user = User.find_by(id: session[:user_id])
             Api.new.stores
             Store1.new.products
             Store2.new.products
@@ -18,7 +17,7 @@ class StoresController < JSONAPI::ResourceController
             Store11.new.products
             Store12.new.products
             Store13.new.products
-            Store14.new.products
+            Store14.new.products             
             Store15.new.products
             Store16.new.products
             Store17.new.products
@@ -32,15 +31,24 @@ class StoresController < JSONAPI::ResourceController
             Store25.new.products
 
             @stores = Store.all 
-        
+        else 
+            flash[:notice] = "Please log in."
+            redirect_to new_session_path
+        end 
     end
 
     def show 
-        @store = Store.find_by(id: params["id"])
+        if @user = User.find_by(id: session[:user_id])
+            @store = Store.find_by(id: params["id"])
+        else 
+            flash[:notice] = "Please log in."
+            redirect_to new_session_path
+        end 
     end
 
     private 
 
     def store_params 
     end
+
 end

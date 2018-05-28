@@ -6,5 +6,6 @@ class Review < ApplicationRecord
 
     validates :product_review, :presence => true 
     validates :product_review, :uniqueness => true 
+    validates :product_review, length: {minimum: 10}
 
 end

@@ -7,6 +7,7 @@ class ReviewsController < JSONAPI::ResourceController
 
     def new 
         @review = Review.new
+        @new_review = Review.new
         @store = Store.find(params["store_id"])
         @product = Product.find(params["product_id"])
         @users = User.all
@@ -20,42 +21,38 @@ class ReviewsController < JSONAPI::ResourceController
 
     def update 
         @review = Review.find(params[:id])
-        @user = User.find(params[:user][:id])
-
-        if !@user.provider.nil? && @user.authenticate(params[:review][:password])
-            @review.update(product_review: params[:review][:product_review])
+        @user = User.find_by(id: session[:user_id])
+        updated_review = params[:review][:product_review] 
+        
+        if updated_review.blank?
+            flash[:update_review] = "Reviews must have a minimum of 10 characters."
             redirect_to user_path(@user)
-        elsif @user.provider.nil? && @user.authenticate(params[:review][:password])
-            @review.update(product_review: params[:review][:product_review])
-
-            redirect_to user_path(@user) 
+        elsif !updated_review.blank? && @user 
+            @new_review = Review.new 
+            @new_review.update(product_review: params[:review][:product_review])
+            flash[:update_review] = "Sucessfully updated review!"
+            redirect_to user_path(@user)
         else 
-            redirect_to edit_store_product_review_path(@review)
+            flash[:update_review] = "We were unable to update this review. Reviews must have a minimum of 10 characters. Please try again."
+            redirect_to user_path(@user)
         end 
     end
 
 
     def create 
-        @user = User.find(params[:user][:id])
+        @user = User.find_by(id: session[:user_id])
         @product = Product.find(params[:product_id])
         @store = Store.find(params[:store_id])
 
-        if !@user.provider.nil? && @user.authenticate(params[:review][:password])
+        if @user.valid?
             review = Review.create(
                 product_id: params[:product_id],
                 product_review: params[:review][:product_review],
-                user_id: params[:user][:id]
+                user_id: @user.id
                 )
-            redirect_to store_product_path(@store, @product)
-        elsif @user.provider.nil? && @user.authenticate(params[:review][:password])
-            @review = Review.create(
-                product_id: params[:product_id],
-                product_review: params[:review][:product_review],
-                user_id: params[:user][:id]
-                )
-            redirect_to store_product_path(@store, @product)
+            redirect_to store_product_path(@store, @product), notice: "Successfully published a review!"
         else 
-            redirect_to store_product_path(@store, @product)
+            redirect_to store_product_path(@store, @product), notice: "Could not publish the review at this time. Please try again later."
         end
     end
 

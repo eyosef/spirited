@@ -1,6 +1,7 @@
 <h3>Brewed by: <%= @product.producer_name %> </h3>
 
-<%= link_to "Go Back to the Beer Menu", store_path(@store)  %>
+<%= link_to "Go Back to the Beer Menu", store_path(@store)  %><br></br>
+<%= link_to "My Account", user_path(@user)  %><br></br>
 
 <h3> <%= @product.name %> </h3><br>
 
@@ -13,6 +14,10 @@
 <i>Suggestion: </i><%= @product.serving_suggestion %><br>
 <br>
 
+<% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+<% end %>
+
 <% if @product.reviews.empty? %>
     <p> It looks like there are no reviews yet. </p>
     <p> <%= link_to "Be the first to review this product!",  new_store_product_review_path(@store, @product, @review)  %></p>
@@ -21,7 +26,7 @@
     <h3>User Reviews:</h3>
     <% @product.reviews.each do |review| %>
         <p> <strong> <%= review.user.username %> says:</strong> <%= review.product_review %><br> 
-        posted on <%= review.created_at.strftime("%B %d %Y") %>
+        <i>posted on <%= review.created_at.strftime("%B %d %Y") %></i>
         </p>
 
     <% end %>

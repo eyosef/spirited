@@ -4,14 +4,5 @@
     <%= f.label :product_review, "Product Review" %><br><br>
     <%= f.text_area :product_review, size: "50x15" %><br><br>
 
-    <%= f.label "Select Your Username" %><br><br>
-    <%= collection_select :user, :id, User.all, :id, :username  %><br><br>
-
-    <%= f.label "Password:" %>
-    <%= f.password_field :password %><br></br>
-
-    <%= f.label "Enter Your Password for Confirmation:" %>
-    <%= f.password_field :password_confirmation %><br></br>
-
     <%= f.button "Update Your Review", { :controller => 'reviews', :action => 'update'} %>
 <% end %>

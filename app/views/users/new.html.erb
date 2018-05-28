@@ -1,5 +1,13 @@
 <h3> Create Your User Account: </h3>
 
+<% if flash[:password_mismatch] %>
+    <div class="notice"><%= flash[:password_mismatch] %></div>
+<% end %>
+
+<% if flash[:failure] %>
+    <div class="notice"><%= flash[:failure] %></div>
+<% end %>
+
 <%= form_for @user do |f| %>
 
     <%= f.label :first_name %><br>

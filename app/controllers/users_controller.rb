@@ -12,8 +12,13 @@ class UsersController < JSONAPI::ResourceController
 
         if user.save
             session[:user_id] = user.id 
+            flash[:account_success] = "Successfully created an account."
             redirect_to user_url(user)
+        elsif !user.authenticate(user_params) 
+            flash[:password_mismatch] = "Password and password confirmation do not match."
+            redirect_to new_user_url 
         else 
+            flash[:failure] = "We could not create an account at this time. Please try again later."
             redirect_to new_user_url 
         end
     end 
@@ -23,6 +28,7 @@ class UsersController < JSONAPI::ResourceController
 
     def show 
         @user = User.find(params["id"])
+        @new_review = Review.new
         session[:user_id] = @user.id
 
         @user.reviews.each do |review|
@@ -38,17 +44,9 @@ class UsersController < JSONAPI::ResourceController
 
     def update 
 
-        @user = User.find(params[:id])
+        @user = User.find_by(id: session[:user_id])
 
-        if !@user.provider.nil?
-            if params[:user][:password] ==  params[:user][:password_confirmation]
-                @user.update(login_params)
-                @user.update(user_params)
-                redirect_to user_path(@user) 
-            else 
-                redirect_to edit_user_path(@user)
-            end 
-        elsif @user.provider.nil? && @user.authenticate(params[:user][:password])
+        if @user
             @user.update(user_params)
             redirect_to user_path(@user) 
         else 

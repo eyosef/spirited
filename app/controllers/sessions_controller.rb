@@ -19,7 +19,6 @@ class SessionsController < JSONAPI::ResourceController
 
             if user = User.find_by(:username => oauth_username) 
                 session[:user_id] = user.id 
-
                 redirect_to user_path(user)
             else 
                 user = User.create(:username => oauth_username, 
@@ -35,8 +34,13 @@ class SessionsController < JSONAPI::ResourceController
             if user && user.authenticate(params[:user][:password])
                 session[:user_id] = user.id 
                 redirect_to user_path(user)
-            else 
-                redirect_to new_session_path
+            elsif user.nil?
+                @user = User.new
+                @user.errors.add(:username, :incorrect, message: "Username is incorrect.")
+            else !user.authenticate(params[:user][:password])
+                @user = User.new
+                @user.errors.add(:password, :incorrect, message: "Password is incorrect.")
+                render :new
             end  
         end 
     end 
