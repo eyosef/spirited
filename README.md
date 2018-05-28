@@ -41,4 +41,4 @@ Users can:
 
 ## License 
 
-* This project has been licensed under the MIT open source license.
+* <a href="https://github.com/angular/angular.js/blob/master/LICENSE">This project has been licensed under the MIT open source license.</a>
