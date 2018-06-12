@@ -28,8 +28,7 @@ class ReviewsController < JSONAPI::ResourceController
             flash[:update_review] = "Reviews must have a minimum of 10 characters."
             redirect_to user_path(@user)
         elsif !updated_review.blank? && @user 
-            @new_review = Review.new 
-            @new_review.update(product_review: params[:review][:product_review])
+            @review.update(product_review: params[:review][:product_review])
             flash[:update_review] = "Sucessfully updated review!"
             redirect_to user_path(@user)
         else 
