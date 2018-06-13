@@ -31,15 +31,20 @@ class SessionsController < JSONAPI::ResourceController
             end
         else 
             user = User.find_by(:username => params[:user][:username])
+
             if user && user.authenticate(params[:user][:password])
                 session[:user_id] = user.id 
                 redirect_to user_path(user)
-            elsif user.nil?
+            elsif user.nil? && params[:user][:password].blank?
                 @user = User.new
-                @user.errors.add(:username, :incorrect, message: "Username is incorrect.")
+                render :new
+            elsif user.nil? && !params[:user][:password].blank?
+                @user = User.new
+                flash[:notice] = "Username is incorrect. Please try again."
+                render :new
             else !user.authenticate(params[:user][:password])
                 @user = User.new
-                @user.errors.add(:password, :incorrect, message: "Password is incorrect.")
+                flash[:notice] = "Password is incorrect. Please try again."
                 render :new
             end  
         end 
