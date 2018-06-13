@@ -49,6 +49,7 @@ class ReviewsController < JSONAPI::ResourceController
                 product_review: params[:review][:product_review],
                 user_id: @user.id
                 )
+            review.save
             redirect_to store_product_path(@store, @product), notice: "Successfully published a review!"
         else 
             redirect_to store_product_path(@store, @product), notice: "Could not publish the review at this time. Please try again later."
@@ -65,12 +66,6 @@ class ReviewsController < JSONAPI::ResourceController
         @review.destroy 
 
         redirect_to user_path(@user)
-    end
-
-    private 
-
-    def review_params 
-        params.require(:review).permit(:product_review, :user, :password, :store_id, :product_id)
     end
 
 end
