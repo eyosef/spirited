@@ -1,11 +1,7 @@
 <h3> Create Your User Account: </h3>
 
-<% if flash[:password_mismatch] %>
-    <div class="notice"><%= flash[:password_mismatch] %><br></br></div>
-<% end %>
-
-<% if flash[:failure] %>
-    <div class="notice"><%= flash[:failure] %><br></br></div>
+<% if flash[:update] %>
+    <div class="notice"><%= flash[:update] %><br></br></div>
 <% end %>
 
 <%= render 'form' %>
