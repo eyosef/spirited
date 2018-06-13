@@ -46,9 +46,4 @@ class StoresController < JSONAPI::ResourceController
         end 
     end
 
-    private 
-
-    def store_params 
-    end
-
 end

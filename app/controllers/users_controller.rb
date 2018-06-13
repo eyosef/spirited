@@ -12,13 +12,16 @@ class UsersController < JSONAPI::ResourceController
 
         if user.save
             session[:user_id] = user.id 
-            flash[:account_success] = "Successfully created an account."
+            flash[:update] = "Successfully created an account."
             redirect_to user_url(user)
+        elsif user.username.blank? || user.first_name.blank? || user.last_name.blank? || user.password.blank? || user.password_confirmation.blank?
+            flash[:update] = "The form must be completed to create a new account. Please fill all entries."
+            redirect_to new_user_url
         elsif !user.authenticate(user_params) 
-            flash[:password_mismatch] = "Password and password confirmation do not match."
+            flash[:update] = "Password and password confirmation do not match."
             redirect_to new_user_url 
         else 
-            flash[:failure] = "We could not create an account at this time. Please try again later."
+            flash[:update] = "We could not create an account at this time. Please try again later."
             redirect_to new_user_url 
         end
     end 
