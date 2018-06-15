@@ -1,0 +1,24 @@
+<h2> Meet People </h2><br>
+
+<% @users.each do |u| %>
+    <h3><strong> User: </strong> <%= u.username %>, a.k.a. <i> <%= u.first_name %></i></h3>
+    <p> Joined on <%= u.created_at.strftime("%B %d %Y")%></p>
+
+    <% u.reviews.each do |review| %>
+        <div id="review-<%= review.id%>"><strong><%= review.product.name %> beer: </strong><%= truncate review.product_review %></div>
+            <button class="js-review" data-id="<%= review.id %>"> More... </button><br><br>
+    <% end %>
+    <br></br>
+<% end %>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
+<script>
+   $(function () {
+       $(".js-review").on('click', function() {
+           var id = $(this).data("id");
+           $.get("/reviews/" + id, function(data) {
+                $("#review-"+id).text(data);
+           });
+       });
+   });
+</script>
