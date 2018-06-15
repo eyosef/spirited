@@ -50,7 +50,8 @@ class ReviewsController < JSONAPI::ResourceController
                 user_id: @user.id
                 )
             review.save
-            redirect_to store_product_path(@store, @product), notice: "Successfully published a review!"
+            render json: review, status: 201, notice: "Successfully published a review!"
+            # redirect_to store_product_path(@store, @product), notice: "Successfully published a review!"
         else 
             redirect_to store_product_path(@store, @product), notice: "Could not publish the review at this time. Please try again later."
         end
