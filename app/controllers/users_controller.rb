@@ -2,6 +2,15 @@ require 'omniauth'
 class UsersController < JSONAPI::ResourceController
     skip_before_action :verify_authenticity_token
 
+    def index 
+        @users = User.all
+
+        respond_to do |format|
+            format.html { render :index }
+            format.json { render json: @users }
+        end
+    end 
+
     def new 
         @user = User.new
     end 
