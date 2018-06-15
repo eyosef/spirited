@@ -27,6 +27,6 @@ Rails.application.routes.draw do
 
   jsonapi_resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   
-
+  get '/reviews/:id', to: 'reviews#show'
 
 end
