@@ -21,6 +21,8 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'omniauth-github'
+gem 'active_model_serializers'
+gem 'jquery-rails'
 
 gem "figaro"
 
