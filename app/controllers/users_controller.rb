@@ -26,9 +26,6 @@ class UsersController < JSONAPI::ResourceController
         end
     end 
 
-    def index 
-    end 
-
     def show 
         @user = User.find(session[:user_id])
         
