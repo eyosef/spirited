@@ -29,4 +29,6 @@ Rails.application.routes.draw do
   
   get '/reviews/:id', to: 'reviews#show'
 
+ resources :notes
+
 end

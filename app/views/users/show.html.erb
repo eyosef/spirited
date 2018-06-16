@@ -18,6 +18,36 @@
 <%= link_to "Edit Your Account Info", edit_user_path(@user) %><br></br>
 <%= link_to "See what other users think", users_path %><br><br>
 
+
+<br></br>
+<%= form_for(@note) do |f| %>
+    <%= f.label "Note to self:" %>
+    <%= f.text_field :content %>
+
+    <%= f.submit %>
+<% end %>
+<br></br>
+
+<div id="post">
+  <p id="postContent"></p>
+</div>
+
+<br></br>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
+<script type="text/javascript" charset="utf-8">
+  $(function () {
+    $('form').submit(function(event) {
+        event.preventDefault();
+        var values = $(this).serialize();
+        var posting = $.post("http://localhost:3000/users/", {
+            json_string: JSON.stringify({user_id: "${@user.id}"})
+        }
+    });
+  });
+</script>
+
+
 <% if flash[:update_review] %>
     <div class="notice"><%= flash[:update_review] %></div>
 <% end %>

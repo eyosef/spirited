@@ -37,6 +37,7 @@ class UsersController < JSONAPI::ResourceController
 
     def show 
         @user = User.find(session[:user_id])
+        @note = Note.new 
         
         @user.reviews.each do |review|
             @product = review.product 
