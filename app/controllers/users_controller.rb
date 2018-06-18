@@ -44,6 +44,11 @@ class UsersController < JSONAPI::ResourceController
             @store = @product.store 
         end 
 
+        respond_to do |format|
+            format.html { render :show }
+            format.json { render json: @user }
+        end 
+
     end
 
     def edit 
