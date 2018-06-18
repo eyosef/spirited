@@ -1,32 +1,29 @@
-<br></br>
-<%= form_for(@note) do |f| %>
-    <%= f.label "Note to self:" %>
-    <%= f.text_field :content %>
+<%= form_for @note, :url => { :controller => "notes", :action => "create"}, :html => {:method => :post} do |f| %>
+  <%= f.label "Note to self:" %>
+  <%= f.text_field :content %>
 
-    <%= f.submit %>
+  <%= f.submit %>
 <% end %>
 <br></br>
 
-<div id="post">
-  <p id="postContent"></p>
+<div id="note">
+<p id="noteContent"></p>
 </div>
-
-<br></br>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
 <script type="text/javascript" charset="utf-8">
-  $(function () {
-    $('form').submit(function(event) {
-        event.preventDefault();
+$(function () {
+  $('form').submit(function(event) {
+      event.preventDefault();
+      var values = $(this).serialize();
+      var posting = $.post("/users/" + "<%= @user.id %>" );
+      
+      posting.done(function(data) {
+          console.log(data);
 
-        var values = $(this).serialize();
-
-        var posting = $.post('/users', values);
-  
-        posting.done(function(data) {
-            var note = data; 
-            @("#postContent").text(note["content"]);
-        });
-    });
+          var note = data; 
+          $("#noteContent").text(note["content"]);
+      });
   });
+});
 </script>

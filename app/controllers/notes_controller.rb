@@ -15,7 +15,7 @@ class NotesController < ApplicationController
         @note = Note.create(content: params[:note][:content], user_id: @user.id)
         @note.save
 
-        render json: @user
+        redirect_to user_path(@user)
     end 
 
     def edit 
