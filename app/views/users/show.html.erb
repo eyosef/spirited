@@ -28,8 +28,8 @@
 <% end %>
 <br></br>
 
-<div id="post">
-  <p id="postContent"></p>
+<div id="note">
+  <p id="noteContent"></p>
 </div>
 
 <br></br>
@@ -40,9 +40,12 @@
     $('form').submit(function(event) {
         event.preventDefault();
         var values = $(this).serialize();
-        var posting = $.post("http://localhost:3000/users/", {
-            json_string: JSON.stringify({user_id: "${@user.id}"})
-        }
+        var posting = $.post("http://localhost:3000/users/" + "<%= @user.id %>" );
+        
+        posting.done(function(data) {
+            var note = data; 
+            $("#noteContent").text(note["content"]);
+        });
     });
   });
 </script>
