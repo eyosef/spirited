@@ -14,7 +14,8 @@ class NotesController < ApplicationController
         @user = User.find_by(id: session[:user_id])
         @note = Note.create(content: params[:note][:content], user_id: @user.id)
         @note.save
-        render json: @note, status: 201
+
+        render json: @user
     end 
 
     def edit 
