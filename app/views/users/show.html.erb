@@ -27,8 +27,10 @@
   <% end %>
   <br></br>
   
-  <div id="note">
-  <p id="noteContent"></p>
+  <div id="notes">
+    <% @user.notes.each do |note| %>
+        <p> <%= note.content %> </p>
+    <% end %>
   </div>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
@@ -37,13 +39,11 @@
     $('form').submit(function(event) {
         event.preventDefault();
         var values = $(this).serialize();
-        var posting = $.post("/users/" + "<%= @user.id %>" );
+        var posting = $.post("/notes", values);
         
         posting.done(function(data) {
-            console.log(data);
-  
             var note = data; 
-            $("#noteContent").text(note["content"]);
+            $("#notes").append(`<p> ${note.content} </p>`)
         });
     });
   });

@@ -3,6 +3,7 @@ class UsersController < JSONAPI::ResourceController
     skip_before_action :verify_authenticity_token
 
     def index 
+        @user = User.first
         @users = User.all
 
         respond_to do |format|

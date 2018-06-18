@@ -13,9 +13,8 @@ class NotesController < ApplicationController
     def create 
         @user = User.find_by(id: session[:user_id])
         @note = Note.create(content: params[:note][:content], user_id: @user.id)
-        @note.save
 
-        redirect_to user_path(@user)
+        render json: @note, status: 201
     end 
 
     def edit 

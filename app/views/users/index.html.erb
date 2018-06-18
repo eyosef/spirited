@@ -1,15 +1,16 @@
 <h2> Meet People </h2><br>
+    <div id="users">
+    <h3><strong> User: </strong> <%= @user.username %>, a.k.a. <i> <%= @user.first_name %></i></h3>
+    <p> Joined on <%= @user.created_at.strftime("%B %d %Y")%></p>
 
-<% @users.each do |u| %>
-    <h3><strong> User: </strong> <%= u.username %>, a.k.a. <i> <%= u.first_name %></i></h3>
-    <p> Joined on <%= u.created_at.strftime("%B %d %Y")%></p>
-
-    <% u.reviews.each do |review| %>
+    <% @user.reviews.each do |review| %>
         <div id="review-<%= review.id%>"><strong><%= review.product.name %> beer: </strong><%= truncate review.product_review %></div>
             <button class="js-review" data-id="<%= review.id %>"> More... </button><br><br>
     <% end %>
     <br></br>
-<% end %>
+    </div>
+
+    <button id="users-btn">See more users...</button>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
 <script>
@@ -17,8 +18,30 @@
        $(".js-review").on('click', function() {
            var id = $(this).data("id");
            $.get("/reviews/" + id, function(data) {
-                $("#review-"+id).text(data);
+                $("#review-"+id).text(data.product_review);
            });
        });
+
+       $("#users-btn").on('click', function() {
+           $("#users").html("");
+
+           $.get("/users.json", function(users) {
+               users.forEach(function (user) {
+                   let eachUser = new User(user.username, user.first_name, user.reviews)
+                   $("#users").append(eachUser.renderUser())
+               });
+           });
+       }); 
+
+       function User(userName, firstName, reviews){
+        this.userName = userName; 
+        this.firstName = firstName; 
+        this.reviews = reviews;
+       };
+
+       User.prototype.renderUser = function() {
+        return `<h3><strong> User: </strong> ${this.userName}, a.k.a. <i> ${this.firstName} </i></h3>
+        <p><strong>Reviews:</strong> ${this.reviews.length} </p><br>`
+       };
    });
 </script>
