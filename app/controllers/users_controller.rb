@@ -3,7 +3,7 @@ class UsersController < JSONAPI::ResourceController
     skip_before_action :verify_authenticity_token
 
     def index 
-        @user = User.first
+        @user = User.order("RANDOM()").first
         @users = User.all
 
         respond_to do |format|
@@ -36,7 +36,7 @@ class UsersController < JSONAPI::ResourceController
         end
     end 
 
-    def show 
+    def show
         @user = User.find(session[:user_id])
         @note = Note.new 
         
