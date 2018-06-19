@@ -57,7 +57,8 @@
 <% @user.reviews.newest_first.each do |review| %>
     <strong>Business: </strong> <%= review.product.store.name %><br>
     <strong>Product: </strong> <%= review.product.name %><br>
-    <div id="review-<%= review.id%>"><strong>Review: </strong><%= truncate review.product_review %></div><button class="js-review" data-id="<%= review.id %>"> More... </button><br><br>
+    <div id="review-<%= review.id%>"><strong>Review: </strong><%= truncate review.product_review %></div>
+    <button class="js-review" data-id="<%= review.id %>"> More... </button><br><br>
     
     <%= link_to "Edit this Review", edit_store_product_review_path(@store, @product, review) %><br>
     <%= link_to "Delete this Review", delete_review_path(review) %><br></br>
@@ -71,8 +72,9 @@
        $(".js-review").on('click', function() {
            var id = $(this).data("id");
            $.get("/reviews/" + id, function(data) {
-                $("#review-"+id).text(data);
+                $("#review-" + id).text(data);
            });
        });
    });
+
 </script>
