@@ -18,7 +18,7 @@
        $(".js-review").on('click', function() {
            var id = $(this).data("id");
            $.get("/reviews/" + id, function(data) {
-                $("#review-"+id).text(data.product_review);
+                $("#review-"+id).text(data);
            });
        });
 
@@ -40,8 +40,11 @@
        };
 
        User.prototype.renderUser = function() {
+        <p> Joined on <%= @user.created_at.strftime("%B %d %Y")%></p>
+
         return `<h3><strong> User: </strong> ${this.userName}, a.k.a. <i> ${this.firstName} </i></h3>
         <p><strong>Reviews:</strong> ${this.reviews.length} </p><br>`
        };
+
    });
 </script>
