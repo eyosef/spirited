@@ -38,14 +38,21 @@
   $(function () {
     $('form').submit(function(event) {
         event.preventDefault();
-        var values = $(this).serialize();
-        var posting = $.post("/notes", values);
+        const values = $(this).serialize();
+        const posting = $.post("/notes", values);
         
         posting.done(function(data) {
-            var note = data; 
+            const note = new Note(data.content);
             $("#notes").append(`<p> ${note.content} </p>`)
         });
     });
+
+    class Note {
+        constructor(content) {
+            this.content = content
+        }
+    }
+
   });
   </script>
 
@@ -70,7 +77,7 @@
 <script>
    $(function () {
        $(".js-review").on('click', function() {
-           var id = $(this).data("id");
+           const id = $(this).data("id");
            $.get("/reviews/" + id, function(data) {
                 $("#review-" + id).text(data);
            });
