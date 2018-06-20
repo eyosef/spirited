@@ -29,9 +29,24 @@
   
   <div id="notes">
     <% @user.notes.each do |note| %>
-        <p> <%= note.content %> </p>
+        <div id="note-<%=note.id%>"><%= note.content %></div>
+        <div id=delete-"note.id"><button class="deleteButton" data-id="<%= note.id %>" >Delete</button></div><br>
     <% end %>
   </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
+<script>
+   $(function () {
+       $(".deleteButton").on('click', function() {
+           const id = $(this).data("id");
+           $.get("/notes/" + id, function(data) {
+                $("#note-" + id).remove(data);
+           });
+
+       });
+   });
+
+</script>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
   <script type="text/javascript" charset="utf-8">
@@ -44,6 +59,7 @@
         posting.done(function(data) {
             const note = new Note(data.content);
             $("#notes").append(`<p> ${note.content} </p>`)
+            $("#notes").append(`<div id=delete-${note.id}><button class="deleteButton" data-id=${note.id}>Delete</button></div>`)
         });
     });
 
