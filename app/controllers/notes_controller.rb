@@ -23,7 +23,11 @@ class NotesController < ApplicationController
     def update 
     end 
 
-    def destroy 
+    def destroy         
+        @note = Note.find_by(id: params[:format])
+        @note.destroy 
+
+        render json: @note
     end 
 
 end
