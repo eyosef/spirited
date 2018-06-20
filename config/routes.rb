@@ -31,5 +31,6 @@ Rails.application.routes.draw do
   get '/reviews/:id', to: 'reviews#show'
 
  resources :notes
+ get '/delete_note' => 'notes#destroy'
 
 end
