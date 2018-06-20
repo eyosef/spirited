@@ -59,6 +59,8 @@ class ReviewsController < JSONAPI::ResourceController
 
     def show 
         review = Review.find_by(id: params[:id])
+
+        # render json: review
         render plain: review.product_review 
     end
 
