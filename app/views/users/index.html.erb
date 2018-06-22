@@ -28,11 +28,9 @@
        });
        $("#users-btn").on('click', function() {
            $("#allUsers").html("");
-
            gon.all_users.forEach(function (user) {
                 let eachUser = new User(user.username, user.first_name, user.reviews)
                 $("#allUsers").append(eachUser.renderUser())
-                $("#allUsers").append(eachUser.renderReviews())
             });
        }); 
 

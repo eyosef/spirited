@@ -23,6 +23,7 @@ class User < ApplicationRecord
     def self.users_and_reviews 
         @users = self.all
         @users.each do |user|
+            binding.pry 
             user.the_reviews = []
             user.reviews.each do |review|
                 user.the_reviews << review

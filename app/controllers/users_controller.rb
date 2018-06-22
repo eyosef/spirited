@@ -4,8 +4,8 @@ class UsersController < JSONAPI::ResourceController
 
     def index 
         @user = User.find_by(id: 3)
-        gon.all_users = User.users_and_reviews
-        binding.pry 
+        @users = User.all.as_json
+        gon.all_users = @users
 
         respond_to do |format|
             format.html { render :index }
