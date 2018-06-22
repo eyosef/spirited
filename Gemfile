@@ -27,6 +27,7 @@ gem 'jquery-rails'
 gem "figaro"
 
 gem 'pusher', '~> 1.3'
+gem 'gon'
 
 gem 'jsonapi-resources'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

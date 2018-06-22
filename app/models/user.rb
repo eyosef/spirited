@@ -20,5 +20,15 @@ class User < ApplicationRecord
         end
     end
 
+    def self.users_and_reviews 
+        @users = self.all
+        @users.each do |user|
+            user.the_reviews = []
+            user.reviews.each do |review|
+                user.the_reviews << review
+            end 
+        end 
+    end 
+
 
 end

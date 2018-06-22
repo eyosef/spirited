@@ -1,3 +1,4 @@
+<%= include_gon %>
 <h2> Meet People </h2><br>
     <div id="allUsers">
     <h3><strong> User: </strong> <%= @user.username %>, a.k.a. <i> <%= @user.first_name %></i></h3>
@@ -12,13 +13,14 @@
 
     <button id="users-btn">See more users...</button>
 
+<%= content_tag :div, class: "users", data: {users: @users} do %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
 <script>
    $(function () {
        $(".js-review").on('click', function() {
            const id = $(this).data("id");
            const $element = $(this);
-           
+
            $.get("/reviews/" + id, function(data) {
                 $("#review-"+id).text(data);
                 $element.remove();
@@ -27,12 +29,11 @@
        $("#users-btn").on('click', function() {
            $("#allUsers").html("");
 
-           $.get("/users.json", function(users) {
-               users.forEach(function (user) {
-                   let eachUser = new User(user.username, user.first_name, user.reviews)
-                   $("#allUsers").append(eachUser.renderUser())
-               });
-           });
+           gon.all_users.forEach(function (user) {
+                let eachUser = new User(user.username, user.first_name, user.reviews)
+                $("#allUsers").append(eachUser.renderUser())
+                $("#allUsers").append(eachUser.renderReviews())
+            });
        }); 
 
        function User(userName, firstName, reviews){
@@ -42,8 +43,15 @@
        };
 
        User.prototype.renderUser = function() {
-        return `<h3><strong> User: </strong> ${this.userName}, a.k.a. <i> ${this.firstName} </i></h3>
-        <p><strong>Reviews:</strong> ${this.reviews.length} </p><br>`
+        return `<h3><strong> User: </strong> ${this.userName}, a.k.a. <i> ${this.firstName} </i></h3>`
        };
+
+       User.prototype.renderReviews = function() {
+            this.reviews.forEach(function (review) {
+                return `<p><strong>${this.review.product_name}</strong>${this.review.product_review}</p>`
+            });
+       };
+
    });
 </script>
+<% end %>   
