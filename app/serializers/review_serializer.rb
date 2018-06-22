@@ -4,7 +4,7 @@ class ReviewSerializer < ActiveModel::Serializer
     belongs_to :user
 
     def product_name
-        self.product.name
+        object.product.name
     end 
 
   end
