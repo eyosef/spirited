@@ -29,8 +29,10 @@
   
   <div id="notes">
     <% @user.notes.each do |note| %>
-        <div id="note-<%=note.id%>"><%= note.content %></div>
-        <div id=delete-"note.id"><button class="deleteButton" data-id="<%= note.id %>" >Delete</button></div><br>
+        <div id="the-note-<%=note.id%>">
+            <div><%= note.content %></div>
+            <div id="delete-<%=note.id%>"><button class="deleteButton" data-id="<%= note.id %>" >Delete</button></div><br>
+        </div>
     <% end %>
   </div>
 
@@ -39,11 +41,17 @@
    $(function () {
        $(".deleteButton").on('click', function() {
            const id = $(this).data("id");
-           $.get("/notes/" + id, function(data) {
-                $("#note-" + id).remove(data);
-           });
-
+           const $element = $(this);
+           $.ajax({
+               url: "/notes/" + id,
+               type: 'DELETE',
+               success:function(id) {
+                $element.remove(),
+                $("#the-note-" + id).remove();
+               }
+           })
        });
+
    });
 
 </script>

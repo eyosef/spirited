@@ -3,12 +3,13 @@ class UsersController < JSONAPI::ResourceController
     skip_before_action :verify_authenticity_token
 
     def index 
-        @user = User.order("RANDOM()").first
+        @user = User.last
+        # @user = User.order("RANDOM()").first
         @users = User.all
 
         respond_to do |format|
             format.html { render :index }
-            format.json { render json: @users }
+            format.json { render json: @users, status: 201}
         end
     end 
 
